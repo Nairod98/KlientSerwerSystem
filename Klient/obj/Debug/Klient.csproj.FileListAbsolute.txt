@@ -11,3 +11,16 @@ C:\Dane\Studia UMK\Prog. siec. kom\KlientSerwerSystemv3\Klient\bin\Debug\System.
 C:\Dane\Studia UMK\Prog. siec. kom\KlientSerwerSystemv3\Klient\obj\Debug\Klient.csproj.CopyComplete
 C:\Dane\Studia UMK\Prog. siec. kom\KlientSerwerSystemv3\Klient\obj\Debug\Klient.exe
 C:\Dane\Studia UMK\Prog. siec. kom\KlientSerwerSystemv3\Klient\obj\Debug\Klient.pdb
+C:\repo\KlientSerwerSystemv3\Klient\bin\Debug\Klient.exe.config
+C:\repo\KlientSerwerSystemv3\Klient\bin\Debug\Klient.exe
+C:\repo\KlientSerwerSystemv3\Klient\bin\Debug\Klient.pdb
+C:\repo\KlientSerwerSystemv3\Klient\bin\Debug\System.IO.Ports.dll
+C:\repo\KlientSerwerSystemv3\Klient\bin\Debug\Wspolne.dll
+C:\repo\KlientSerwerSystemv3\Klient\bin\Debug\Wspolne.pdb
+C:\repo\KlientSerwerSystemv3\Klient\bin\Debug\System.IO.Ports.xml
+C:\repo\KlientSerwerSystemv3\Klient\obj\Debug\Klient.csproj.AssemblyReference.cache
+C:\repo\KlientSerwerSystemv3\Klient\obj\Debug\Klient.csproj.SuggestedBindingRedirects.cache
+C:\repo\KlientSerwerSystemv3\Klient\obj\Debug\Klient.csproj.CoreCompileInputs.cache
+C:\repo\KlientSerwerSystemv3\Klient\obj\Debug\Klient.csproj.CopyComplete
+C:\repo\KlientSerwerSystemv3\Klient\obj\Debug\Klient.exe
+C:\repo\KlientSerwerSystemv3\Klient\obj\Debug\Klient.pdb

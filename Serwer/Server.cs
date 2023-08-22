@@ -63,7 +63,11 @@ namespace Server
             _services.TryGetValue(_serviceName, out IServiceModule serviceModule);
 
             if (serviceModule != null) return serviceModule.AnswerCommand(string.Format("{0} {1}", _serviceName, _serviceParams));
-            else throw new MissingMethodException();
+            else
+            {
+                Console.WriteLine("{0} is inaccesible", _serviceName);
+                return "";
+            }
         }
 
         void ConfigCommander(string[] command)
@@ -210,13 +214,10 @@ namespace Server
             Server _server = new Server();
             string command;
             string[] commandParams;
-
-            //_server.AddService("ping", new PingPongServiceModule());
-            //_server.AddService("chat", new ChatServiceModule());
-            //_server.AddService("file", new FileServiceModule());
-
-            //_server.AddListener(new TCPListener());
-            //_server.AddListener(new UDPListener());
+            
+            //DEBUG
+            //string[] commandParams = {"conf", "start-all"};
+            //_server.ConfigCommander(commandParams);
 
             while (true)
             {

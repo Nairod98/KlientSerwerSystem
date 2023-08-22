@@ -16,7 +16,7 @@ namespace Common
         {
             string filePath = string.Format("{0}\\{1}", Config.SERVER_FILES_DIR, fileName);
 
-            if (!File.Exists(filePath)) return "Not found\n";
+            if (!File.Exists(filePath)) return "File not found\n";
 
             byte[] fileBytes = File.ReadAllBytes(filePath);
             string fileBase64 = Convert.ToBase64String(fileBytes);

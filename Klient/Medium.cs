@@ -1,5 +1,5 @@
 ﻿using Common;
-
+using System;
 using System.IO;
 using System.IO.Ports;
 using System.Net;
@@ -22,23 +22,28 @@ namespace Client
             _networkStream = stream;
         }
 
+        /// <summary>
+        /// Metoda do zamiany requestu na strumień danych w bajtach, a następnie jest wykonywane wysyłanie dopóki są one dostępne
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public override string QA(string request)
         {
             byte[] data = Encoding.ASCII.GetBytes(request);
-            _networkStream.Write(data, 0, data.Length);
+            _networkStream.Write(data, 0, data.Length); //wysyłanie tablicy bajtów do serwera
 
-            byte[] msg = new byte[256];
+            byte[] msg = new byte[256]; //rozmiar jednego pakietu do odebrania z serwera
             string response = "";
             int bytes;
 
             do
             {
-                bytes = _networkStream.Read(msg, 0, msg.Length);
-                response += Encoding.ASCII.GetString(msg, 0, bytes);
+                bytes = _networkStream.Read(msg, 0, msg.Length); //odczytywanie bajtów z serwera
+                response += Encoding.ASCII.GetString(msg, 0, bytes); //zamiana bajtów na string
             }
             while (_networkStream.DataAvailable);
 
-            return response;
+            return response; //odpowiedź z serwera jako string
         }
     }
 
@@ -56,6 +61,7 @@ namespace Client
         public override string QA(string request)
         {
             byte[] data = Encoding.ASCII.GetBytes(request);
+
             _client.Send(data, data.Length);
 
             byte[] msg;
@@ -83,14 +89,24 @@ namespace Client
 
         public override string QA(string request)
         {
-            File.WriteAllText(_fileName, request);
+            try
+            {
+                File.WriteAllText(_fileName, request);
 
-            Thread.Sleep(10);
-            StreamReader streamReader = new StreamReader(_fileName.Replace(".txt", ".data"));
-            string result = streamReader.ReadToEnd() + "\n";
-            streamReader.Close();
+                Thread.Sleep(1000);
+                StreamReader streamReader = new StreamReader(_fileName.Replace(".txt", ".data"));
+                string result = streamReader.ReadToEnd() + "\n";
+                streamReader.Close();
 
-            return result;
+                File.Delete(_fileName);
+
+                return result;
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message + " Did you enable the required medium?");
+                return "";
+            }
         }
     }
 
@@ -99,6 +115,7 @@ namespace Client
         private readonly SerialPort _serialPort;
         private string _newData = "";
 
+        //Otwieranie serial portu i odbiór danych
         public MediumRS232(SerialPort serialPort)
         {
             _serialPort = serialPort;
@@ -109,11 +126,12 @@ namespace Client
         public void Handler(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort serialPort = (SerialPort)sender;
-            _newData = serialPort.ReadLine();
+            _newData = serialPort.ReadExisting();
         }
 
         public override string QA(string request)
         {
+            int triesCounter = 0;
             string response = "";
 
             if (!_serialPort.IsOpen)
@@ -121,11 +139,13 @@ namespace Client
                 _serialPort.Open();
             }
 
+            _newData = "";
             _serialPort.Write(request);
 
-            while (response.Equals(string.Empty)) 
+            while (response.Equals(string.Empty) && triesCounter < 1000) 
             {
                 response = _newData;
+                triesCounter++;
             }
 
             return response;
@@ -143,7 +163,16 @@ namespace Client
 
         public override string QA(string request)
         {
-            return _dotNetRemotingMarshaling.Generate(request);
+            try
+            {
+                string response = _dotNetRemotingMarshaling.Generate(request);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return "";
+            }
         }
     }
 }

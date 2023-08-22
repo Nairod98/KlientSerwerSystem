@@ -7,3 +7,12 @@ C:\Dane\Studia UMK\Prog. siec. kom\KlientSerwerSystemv3\Wspolne\bin\Debug\System
 C:\Dane\Studia UMK\Prog. siec. kom\KlientSerwerSystemv3\Wspolne\obj\Debug\Wspolne.csproj.CopyComplete
 C:\Dane\Studia UMK\Prog. siec. kom\KlientSerwerSystemv3\Wspolne\obj\Debug\Wspolne.dll
 C:\Dane\Studia UMK\Prog. siec. kom\KlientSerwerSystemv3\Wspolne\obj\Debug\Wspolne.pdb
+C:\repo\KlientSerwerSystemv3\Wspolne\bin\Debug\Wspolne.dll
+C:\repo\KlientSerwerSystemv3\Wspolne\bin\Debug\Wspolne.pdb
+C:\repo\KlientSerwerSystemv3\Wspolne\bin\Debug\System.IO.Ports.dll
+C:\repo\KlientSerwerSystemv3\Wspolne\bin\Debug\System.IO.Ports.xml
+C:\repo\KlientSerwerSystemv3\Wspolne\obj\Debug\Wspolne.csproj.AssemblyReference.cache
+C:\repo\KlientSerwerSystemv3\Wspolne\obj\Debug\Wspolne.csproj.CoreCompileInputs.cache
+C:\repo\KlientSerwerSystemv3\Wspolne\obj\Debug\Wspolne.csproj.CopyComplete
+C:\repo\KlientSerwerSystemv3\Wspolne\obj\Debug\Wspolne.dll
+C:\repo\KlientSerwerSystemv3\Wspolne\obj\Debug\Wspolne.pdb

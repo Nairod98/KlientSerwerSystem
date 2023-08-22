@@ -4,6 +4,13 @@ namespace Common
 {
     public class PingPong
     {
+        /// <summary>
+        /// Metoda do wykonywania komendy ping, która tworzy ¿¹danie do serwera. Generuje bajty wg. losowych znaków ASCII je¿eli 
+        /// d³ugoœæ komendy jest za ma³a to zostanie przyjêta pierwotna wartoœæ
+        /// </summary>
+        /// <param name="requestSize"></param>
+        /// <param name="responseSize"></param>
+        /// <returns></returns>
         public static string Ping(int requestSize, int responseSize)
         {
             string request = string.Format("ping {0} ", responseSize);
@@ -13,6 +20,11 @@ namespace Common
             return request;
         }
 
+        /// <summary>
+        /// Metoda do generowania bajtów wg. ASCII
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
         private static string GenerateBytes(int count)
         {
             Random r = new Random();

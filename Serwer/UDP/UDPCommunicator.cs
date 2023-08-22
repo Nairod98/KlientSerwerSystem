@@ -41,6 +41,7 @@ namespace Server.UDP
                             Console.Write(string.Format("{0} - UDP | get: {1}", groupEP.Address, data));
 
                             byte[] msg = Encoding.ASCII.GetBytes(onCommand(data));
+
                             _client.Send(msg, msg.Length, groupEP);
                         }
                         catch (Exception ex)
