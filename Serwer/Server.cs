@@ -6,8 +6,6 @@ using Server.UDP;
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO.Ports;
 using System.Linq;
 
 namespace Server
@@ -20,41 +18,48 @@ namespace Server
 
         public Server() { }
 
+        //Dodawanie serwisu
         void AddService(string name, IServiceModule service)
         {
             _services.Add(name, service);
         }
 
+        //Dodawanie komunikatora
         void AddCommunicator(ICommunicator communicator)
         {
             _communicators.Add(communicator);
             communicator.Start(GetService, RemoveCommunicator);
         }
 
+        //Dodawanie nasłuchiwacza
         void AddListener(IListener listener)
         {
             _listeners.Add(listener);
             listener.Start(new CommunicatorD(AddCommunicator));
         }
 
+        //Usuwanie serwisu
         void RemoveService(string name, IServiceModule service)
         {
             _services.Remove(name);
-            Console.WriteLine(string.Format("Stopped {0} service...", service));
+            Console.WriteLine(string.Format("Stopped {0} service", service));
         }
 
+        //Usuwanie komunikatora
         void RemoveCommunicator(ICommunicator communicator)
         {
             communicator.Stop();
             _communicators.Remove(communicator);
         }
 
+        //Usuwanie nasłuchiwacza
         void RemoveListener(IListener listener)
         {
             listener.Stop();
             _listeners.Remove(listener);
         }
 
+        //Tworzenie serwisu
         string GetService(string serviceName)
         {
             string[] service = serviceName.Split(' ');
@@ -70,6 +75,7 @@ namespace Server
             }
         }
 
+        //Wydawanie komend serwerowi
         void ConfigCommander(string[] command)
         {
             if (command[0] != "conf")
@@ -84,24 +90,30 @@ namespace Server
                     StartService("all");
                     StartMedium("all");
                     break;
+
                 case "start-service":
                     StartService(command[2]);
                     break;
+
                 case "stop-service":
                     StopService(command[2]);
                     break;
+
                 case "start-medium":
                     StartMedium(command[2]);
                     break;
+
                 case "stop-medium":
                     StopMedium(command[2]);
                     break;
+
                 default:
                     Console.WriteLine("Unknown command");
                     break;
             }
         }
 
+        //Uruchamianie serwisu
         void StartService(string serviceName)
         {
             switch (serviceName)
@@ -110,14 +122,17 @@ namespace Server
                     AddService("ping", new PingPongServiceModule());
                     Console.WriteLine("Ping service started");
                     break;
+
                 case "chat":
                     AddService("chat", new ChatServiceModule());
                     Console.WriteLine("Chat service started");
                     break;
+
                 case "file":
                     AddService("file", new FileServiceModule());
                     Console.WriteLine("File service started");
                     break;
+
                 case "all":
                     AddService("ping", new PingPongServiceModule());
                     Console.WriteLine("Ping service started");
@@ -126,18 +141,21 @@ namespace Server
                     AddService("file", new FileServiceModule());
                     Console.WriteLine("File service started");
                     break;
+
                 default:
                     Console.WriteLine("Unknown service");
                     break;
             }
         }
 
+        //Zatrzymywanie serwisu
         void StopService(string serviceName)
         {
             if (_services.ContainsKey(serviceName)) RemoveService(serviceName, _services[serviceName]);
             else Console.WriteLine("Unknown service");
         }
 
+        //Uruchamianie medium
         void StartMedium(string mediumName)
         {
             switch (mediumName)
@@ -146,22 +164,27 @@ namespace Server
                     AddListener(new TCPListener());
                     Console.WriteLine("Tcp medium started");
                     break;
+
                 case "udp":
                     AddListener(new UDPListener());
                     Console.WriteLine("Udp medium started");
                     break;
+
                 case "files":
                     AddListener(new FilesProtocolListener());
                     Console.WriteLine("Files medium started");
                     break;
+
                 case "RS232":
                     AddListener(new RS232Listener());
                     Console.WriteLine("Rs232 medium started");
                     break;
+
                 case ".netr":
                     AddListener(new DotNetRemotingListener());
                     Console.WriteLine(".net remoting medium started");
                     break;
+
                 case "all":
                     AddListener(new TCPListener());
                     Console.WriteLine("Tcp medium started");
@@ -174,12 +197,14 @@ namespace Server
                     AddListener(new DotNetRemotingListener());
                     Console.WriteLine(".net remoting medium started");
                     break;
+
                 default:
                     Console.WriteLine("Unknown service");
                     break;
             }
         }
 
+        //Zatrzymywanie medium
         void StopMedium(string mediumName)
         {
             switch (mediumName)
@@ -187,15 +212,30 @@ namespace Server
                 case "tcp":
                     RemoveListener(_listeners.Where(listener => listener is TCPListener).First());
                     break;
+
                 case "udp":
                     RemoveListener(_listeners.Where(listener => listener is UDPListener).First());
                     break;
+
+                case "files":
+                    RemoveListener(_listeners.Where(listener => listener is FilesProtocolListener).First());
+                    break;
+
+                case "RS232":
+                    RemoveListener(_listeners.Where(listener => listener is RS232Listener).First());
+                    break;
+
+                case ".netr":
+                    RemoveListener(_listeners.Where(listener => listener is DotNetRemotingListener).First());
+                    break;
+
                 default:
                     Console.WriteLine("Unknown service");
                     break;
             }
         }
 
+        //Zamykanie całego serwera
         void StopServer()
         {
             _listeners.ForEach(listener => listener.Stop());

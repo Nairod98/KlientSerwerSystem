@@ -22,11 +22,7 @@ namespace Client
             _networkStream = stream;
         }
 
-        /// <summary>
-        /// Metoda do zamiany requestu na strumień danych w bajtach, a następnie jest wykonywane wysyłanie dopóki są one dostępne
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        //Metoda do zamiany requestu na strumień danych w bajtach i wysyłania dopóki są one dostępne
         public override string QA(string request)
         {
             byte[] data = Encoding.ASCII.GetBytes(request);
@@ -58,6 +54,7 @@ namespace Client
             _ipEndPoint = new IPEndPoint(IPAddress.Parse(Config.SERVER_IP), Config.PORT_UDP);
         }
 
+        //Metoda do zamiany requestu na strumień danych w bajtach i wysyłania dopóki są one dostępne
         public override string QA(string request)
         {
             byte[] data = Encoding.ASCII.GetBytes(request);
@@ -94,7 +91,7 @@ namespace Client
                 File.WriteAllText(_fileName, request);
 
                 Thread.Sleep(1000);
-                StreamReader streamReader = new StreamReader(_fileName.Replace(".txt", ".data"));
+                StreamReader streamReader = new StreamReader(_fileName.Replace(".txt", ".data")); //Odczyt z pliku .txt, zapis w pliku .data
                 string result = streamReader.ReadToEnd() + "\n";
                 streamReader.Close();
 

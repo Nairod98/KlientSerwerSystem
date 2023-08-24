@@ -6,12 +6,14 @@ namespace Common
 {
     public class Files
     {
+        //Wypisywanie plików na serwerze
         public static string List()
         {
             string[] files = Directory.GetFiles(Config.SERVER_FILES_DIR).Select(Path.GetFileName).ToArray();
             return string.Join("; ", files) + "\n";
         }
 
+        //Pobieranie plików z serwera
         public static string Get(string fileName)
         {
             string filePath = string.Format("{0}\\{1}", Config.SERVER_FILES_DIR, fileName);
@@ -24,6 +26,7 @@ namespace Common
             return fileBase64 + "\n";
         }
 
+        //Wrzucanie plików na serwer
         public static string Put(string fileName, string base64File)
         {
             string fileServerPath = string.Format("{0}\\{1}", Config.SERVER_FILES_DIR, fileName);
